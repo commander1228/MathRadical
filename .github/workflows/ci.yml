@@ -1,0 +1,48 @@
+name: CMake Catch2 CI
+
+# Triggers the workflow on every push and pull request to the main branch
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+# Allows manual running of the workflow from the Actions tab
+workflow_dispatch:
+
+jobs:
+  build-and-test:
+    # Use the latest Ubuntu environment for the runner
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # Fetch submodules (important if you manage other dependencies this way)
+          submodules: 'true'
+
+      # Step 2: Install necessary tools (CMake, C++ compiler)
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake g++
+
+      # Step 3: Configure the build using CMake
+      - name: Configure CMake
+        # Create a separate build directory (-B) and point to the source directory (-S)
+        run: cmake -B ${{github.workspace}}/build -S ${{github.workspace}} -DCMAKE_BUILD_TYPE=Release
+
+      # Step 4: Build the entire project (including all test executables)
+      - name: Build Project
+        # --parallel uses multiple cores for a faster build
+        run: cmake --build ${{github.workspace}}/build --config Release --parallel
+
+      # Step 5: Run the Catch2 tests using CTest
+      - name: Run Catch2 Tests
+        # Move into the build directory where the executables are located
+        run: |
+          cd ${{github.workspace}}/build
+          # ctest runs all tests defined with add_test(), and --output-on-failure shows details for failed tests
+          ctest --output-on-failure

@@ -62,15 +62,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9cad20ae-59a6-4f3c-aa3c-c0aa1fc01287" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Backend/Math/Fraction.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/Math/Fraction.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/Test/Fraction_Test.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/Test/Math_Utils_Test.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/Math/MathUtils.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/Math/MathUtils.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/Math/MathUtils.h" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/Math/MathUtils.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,8 +113,8 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Catch.All in Fraction_Test.cpp">
-    <configuration name="All in Fraction_Test.cpp" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="MathRadical" TARGET_NAME="fraction_tests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="MathRadical" RUN_TARGET_NAME="fraction_tests" TEST_PATTERN="[#Fraction_Test]" TEST_MODE="PATTERN">
+  <component name="RunManager" selected="Catch.All in Math_Utils_Test.cpp">
+    <configuration name="All in Fraction_Test.cpp" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="MathRadical" TARGET_NAME="fraction_tests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="MathRadical" RUN_TARGET_NAME="fraction_tests" TEST_PATTERN="[#Fraction_Test]" TEST_MODE="PATTERN">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
         <option name="BeforeTestRunTask" enabled="true" />
@@ -250,6 +243,11 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="MathRadicalCore" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="MathRadical" TARGET_NAME="MathRadicalCore" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Nightly" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="MathRadical" TARGET_NAME="Nightly" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -335,6 +333,7 @@
       <item itemvalue="CMake Application.ExperimentalTest" />
       <item itemvalue="CMake Application.ExperimentalUpdate" />
       <item itemvalue="CMake Application.MathRadical" />
+      <item itemvalue="CMake Application.MathRadicalCore" />
       <item itemvalue="CMake Application.Nightly" />
       <item itemvalue="CMake Application.NightlyBuild" />
       <item itemvalue="CMake Application.NightlyConfigure" />
@@ -351,7 +350,6 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Catch.All in Fraction_Test.cpp" />
         <item itemvalue="Catch.All in Math_Utils_Test.cpp" />
       </list>
     </recent_temporary>
@@ -367,7 +365,7 @@
       <workItem from="1764664366993" duration="2726000" />
       <workItem from="1764667123709" duration="292000" />
       <workItem from="1764675388650" duration="1776000" />
-      <workItem from="1764677395181" duration="6358000" />
+      <workItem from="1764677395181" duration="6869000" />
     </task>
     <servers />
   </component>
