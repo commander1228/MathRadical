@@ -34,6 +34,28 @@ public:
     */
     static bool isPrime(int n);
     static bool isPrime(int n, bool print);
+
+    /**
+    * returns the slope fo two points
+    * @param a x1
+    * @param b = y1
+    * @param c = x2
+    * @param d = y2
+    * @param print If true, prints the result
+    * @return the slope of the two given points
+    */
+    static double slope(double a, double b, double c, double d);
+    static double slope(double a, double b, double c, double d, bool print);
+
+    /**
+    * returns the slope fo two points
+    * @param a an array with two values representing x and y
+    * @param b the second array with two values representing x and y
+    * @param print If true, prints the result
+    * @return the slope of the two given points
+    */
+    static double slope(double a[], double b[]);
+    static double slope(double a[], double b[], bool print);
 };
 
 #endif

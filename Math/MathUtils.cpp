@@ -1,5 +1,7 @@
 #include "MathUtils.h"
 #include <cmath>
+#include <iterator>
+#include <algorithm>
 
 int MathUtils::GCD(int a, int b) {
     while (b != 0) {
@@ -48,6 +50,37 @@ bool MathUtils::isPrime(int n, bool print) {
             std::cout << n << " is prime." << std::endl;
         else
             std::cout << n << " is not prime." << std::endl;
+    }
+    return result;
+}
+
+double MathUtils::slope(double a, double b, double c, double d) {
+    double numerator = d - b;
+    double denominator = c - a;
+    return numerator / denominator;
+}
+
+double MathUtils::slope(double a, double b, double c, double d, bool print) {
+    double result = slope(a,b,c,d);
+    if (print)
+        std::cout<<"the slope between the points ("<< a << ","<< b <<
+            ") and ("<<c<<","<<d<< ") is "<<result<<std::endl;
+    return result;
+}
+
+double MathUtils::slope(double a[], double b[]) {
+    double numerator = b[1] - a[1];
+    double denominator = b[0] - a[0];
+    return numerator / denominator;
+}
+
+double MathUtils::slope(double a[], double b[], bool print) {
+    double result = slope(a,b);
+    if (print) {
+        std::cout << "The slope between the points ("
+                     << a[0] << "," << a[1] << ") and ("
+                     << b[0] << "," << b[1] << ") is "
+                     << result << std::endl;
     }
     return result;
 }
