@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="BackendCodeEditorMiscSettings">
-    <option name="/Default/Environment/Hierarchy/GeneratedFilesCacheKey/Timestamp/@EntryValue" value="44" type="long" />
+    <option name="/Default/Environment/Hierarchy/GeneratedFilesCacheKey/Timestamp/@EntryValue" value="46" type="long" />
     <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexedValue" value="true" type="bool" />
     <option name="/Default/Housekeeping/GlobalSettingsUpgraded/IsUpgraded/@EntryValue" value="true" type="bool" />
     <option name="/Default/RiderDebugger/RiderRestoreDecompile/RestoreDecompileSetting/@EntryValue" value="false" type="bool" />
@@ -53,6 +53,7 @@
       <config projectName="MathRadical" targetName="ExperimentalSubmit" />
       <config projectName="MathRadical" targetName="NightlyConfigure" />
       <config projectName="MathRadical" targetName="NightlyMemCheck" />
+      <config projectName="MathRadical" targetName="MathRadicalCore" />
     </generated>
   </component>
   <component name="CMakeSettings">
@@ -61,10 +62,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9cad20ae-59a6-4f3c-aa3c-c0aa1fc01287" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/CMakeLists.txt" afterDir="false" />
-    </list>
+    <list default="true" id="9cad20ae-59a6-4f3c-aa3c-c0aa1fc01287" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -74,6 +72,13 @@
     <option name="formatViaClangd" value="false" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="GitHub Workflow" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -365,7 +370,7 @@
       <workItem from="1764664366993" duration="2726000" />
       <workItem from="1764667123709" duration="292000" />
       <workItem from="1764675388650" duration="1776000" />
-      <workItem from="1764677395181" duration="6869000" />
+      <workItem from="1764677395181" duration="7243000" />
     </task>
     <servers />
   </component>
