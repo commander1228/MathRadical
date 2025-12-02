@@ -1,31 +1,38 @@
 #include "MathUtils.h"
 #include <cmath>
-#include <iterator>
 #include <algorithm>
+#include <iostream>
+#include <stdexcept>
+#include <numeric>
 
-int MathUtils::GCD(int a, int b) {
+long long MathUtils::GCD(long long a, long long b) {
+    a = std::llabs(a);
+    b = std::llabs(b);
+
     while (b != 0) {
-        int temp = b;
+        long long temp = b;
         b = a % b;
         a = temp;
     }
     return a;
 }
 
-int MathUtils::GCD(int a, int b, bool print) {
-    int gcd = GCD(a, b);
+long long MathUtils::GCD(long long a, long long b, bool print) {
+    long long gcd = GCD(a, b);
     if (print)
-        std::cout << "The greatest common denominator of " << a << " and " << b << " is " << gcd << std::endl;
+        std::cout << "The greatest common divisor of " << a << " and " << b << " is " << gcd << std::endl;
     return gcd;
 }
 
-int MathUtils::LCM(int a, int b) {
-    int gcd = GCD(a, b);
-    return (a / gcd) * b;
+long long MathUtils::LCM(long long a, long long b) {
+    long long gcd = MathUtils::GCD((long long)a, (long long)b);
+    long long result = ((long long)a / gcd) * (long long)b;
+
+    return result;
 }
 
-int MathUtils::LCM(int a, int b, bool print) {
-    int lcm = LCM(a, b);
+long long MathUtils::LCM(long long a, long long b, bool print) {
+    long long lcm = LCM(a, b);
     if (print)
         std::cout << "The least common multiple of " << a << " and " << b << " is " << lcm << std::endl;
     return lcm;
@@ -57,6 +64,11 @@ bool MathUtils::isPrime(int n, bool print) {
 double MathUtils::slope(double a, double b, double c, double d) {
     double numerator = d - b;
     double denominator = c - a;
+
+    if (denominator == 0.0) {
+        throw std::runtime_error("Division by zero: Vertical line (infinite slope)");
+    }
+
     return numerator / denominator;
 }
 
@@ -71,6 +83,11 @@ double MathUtils::slope(double a, double b, double c, double d, bool print) {
 double MathUtils::slope(double a[], double b[]) {
     double numerator = b[1] - a[1];
     double denominator = b[0] - a[0];
+
+    if (denominator == 0.0) {
+        throw std::runtime_error("Division by zero: Vertical line (infinite slope)");
+    }
+
     return numerator / denominator;
 }
 

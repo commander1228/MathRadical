@@ -6,14 +6,14 @@
 class MathUtils {
 public:
     /**
-      * Returns the greatest common denominator (GCD) of two integers.
+      * Returns the greatest common divisor (GCD) of two integers (long long).
       * @param a First integer
       * @param b Second integer
       * @param print If true, prints the result
       * @return GCD of a and b
       */
-    static int GCD(int a, int b);
-    static int GCD(int a, int b, bool print);
+    static long long GCD(long long a, long long b);
+    static long long GCD(long long a, long long b, bool print);
 
     /**
    * Returns the least common multiple (LCM) of two integers.
@@ -22,8 +22,8 @@ public:
    * @param print If true, prints the result
    * @return LCM of a and b
    */
-    static int LCM(int a, int b);
-    static int LCM(int a, int b, bool print);
+    static long long LCM(long long a, long long b);
+    static long long LCM(long long a, long long b, bool print);
 
 
     /**
