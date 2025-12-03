@@ -55,7 +55,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 
-const props = defineProps<{
+defineProps<{
   title: string;
   label1: string;
   label2: string;
