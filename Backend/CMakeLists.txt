@@ -32,8 +32,7 @@ enable_testing()
 include(CTest)
 
 find_package(Crow CONFIG REQUIRED)
-add_executable(my_project main.cpp)
-target_link_libraries(my_project PRIVATE Crow::Crow)
+target_link_libraries(MathRadical PRIVATE Crow::Crow)
 
 #  Fraction Tests
 # -----------------------------

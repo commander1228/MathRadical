@@ -4,6 +4,8 @@
 #include <limits> // To easily define large numbers
 #include <stdexcept> // For catching exceptions
 #include <string>
+#include "string"
+#include "crow.h"
 
 int main() {
 
