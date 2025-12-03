@@ -12,20 +12,22 @@ on:
 jobs:
 
 
-  frontend-fedora:
-    runs-on: fedora-latest
+  frontend-build-and-test:
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./Frontend
 
     steps:
-      - name: Install Node.js and Git
-        run: |
-          dnf -y update
-          dnf -y install nodejs npm git
-
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: Frontend/package-lock.json
 
       - name: Install dependencies
         run: npm ci
