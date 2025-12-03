@@ -18,33 +18,21 @@
       <h2 class="text-3xl font-bold text-center mb-8">Our Tools</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
         
-        <!-- LCM Card -->
-        <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow">
-          <div class="card-body">
-            <h2 class="card-title">Least Common Multiple (LCM)</h2>
-            <p>
-              Calculate the smallest positive integer that is divisible by both of your selected numbers. 
-              Useful for finding common denominators in fractions.
-            </p>
-            <div class="card-actions justify-end mt-4">
-              <router-link :to="{ name: 'lcm' }" class="btn btn-primary">Try LCM</router-link>
-            </div>
-          </div>
-        </div>
+        <ToolCard
+          title="Least Common Multiple (LCM)"
+          description="Calculate the smallest positive integer that is divisible by both of your selected numbers. Useful for finding common denominators in fractions."
+          routeName="lcm"
+          buttonText="Try LCM"
+          buttonClass="btn-primary"
+        />
 
-        <!-- GCD Card -->
-        <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow">
-          <div class="card-body">
-            <h2 class="card-title">Greatest Common Denominator (GCD)</h2>
-            <p>
-              Find the largest positive integer that divides each of the integers. 
-              Essential for simplifying fractions and number theory problems.
-            </p>
-            <div class="card-actions justify-end mt-4">
-              <router-link :to="{ name: 'gcd' }" class="btn btn-secondary">Try GCD</router-link>
-            </div>
-          </div>
-        </div>
+        <ToolCard
+          title="Greatest Common Denominator (GCD)"
+          description="Find the largest positive integer that divides each of the integers. Essential for simplifying fractions and number theory problems."
+          routeName="gcd"
+          buttonText="Try GCD"
+          buttonClass="btn-secondary"
+        />
 
       </div>
     </div>
@@ -52,4 +40,5 @@
 </template>
 
 <script setup lang="ts">
+import ToolCard from '../components/ToolCard.vue';
 </script>
