@@ -1,11 +1,11 @@
-#include "Math/MathUtils.h"
-#include "Math/Fraction.h"
-#include <iostream>
-#include <limits> // To easily define large numbers
-#include <stdexcept> // For catching exceptions
-#include <string>
+#include <crow.h>
+#include "Api/MathUtilsRoutes.h"
 
 int main() {
+    crow::SimpleApp app;
 
-    return 0;
+    MathUtilsRoutes mathUtilRoutes(app);
+
+    app.port(18080).multithreaded().run();
+
 }

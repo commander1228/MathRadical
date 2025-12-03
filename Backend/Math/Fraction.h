@@ -1,7 +1,3 @@
-//
-// Created by kianw on 12/2/2025.
-//
-
 #ifndef MATHRADICAL_FRACTION_H
 #define MATHRADICAL_FRACTION_H
 

@@ -1,11 +1,6 @@
-//
-// Created by kianw on 12/2/2025.
-//
-
 #include "Fraction.h"
 #include <stdexcept>
 #include <cmath>
-#include <numeric>
 #include "MathUtils.h"
 
 //constructor
