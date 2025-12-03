@@ -4,7 +4,7 @@ services:
     volumes:
       - ./Backend:/app
     ports:
-      - "8080:8080"
+      - "18080:18080"
     # Keep the container running if the app crashes or for debugging
     restart: unless-stopped
 
