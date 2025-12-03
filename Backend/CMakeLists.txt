@@ -38,17 +38,21 @@ set(CORE_SOURCES
 add_library(MathRadicalCore STATIC ${CORE_SOURCES})
 target_include_directories(MathRadicalCore PUBLIC ${CMAKE_SOURCE_DIR}/Math)
 
+if(WIN32)
+    set(PLATFORM_LIBS ws2_32 Mswsock)
+endif()
+
 # API library
 add_library(MathRadicalApi
         Api/MathUtilsRoutes.cpp
         Api/MathUtilsRoutes.h
 )
 target_include_directories(MathRadicalApi PUBLIC ${CMAKE_SOURCE_DIR}/Api)
-target_link_libraries(MathRadicalApi PUBLIC MathRadicalCore Crow::Crow ws2_32 Mswsock)
+target_link_libraries(MathRadicalApi PUBLIC MathRadicalCore Crow::Crow ${PLATFORM_LIBS})
 
 # Main executable
 add_executable(MathRadical main.cpp)
-target_link_libraries(MathRadical PRIVATE MathRadicalCore MathRadicalApi Crow::Crow ws2_32 Mswsock)
+target_link_libraries(MathRadical PRIVATE MathRadicalCore MathRadicalApi Crow::Crow ${PLATFORM_LIBS})
 
 # Enable testing
 include(CTest)
