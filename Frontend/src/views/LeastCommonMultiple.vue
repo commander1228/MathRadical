@@ -15,13 +15,13 @@ import TwoInputResult from '../components/TwoInputResult.vue';
 import mathService from '../api/mathService';
 
 const loading = ref(false);
-const result = ref<number | null>(null);
+const result = ref<string | null>(null);
 
-const handleCalculate = async (v1: number, v2: number) => {
+const handleCalculate = async (a: string, b: string) => {
   loading.value = true;
   result.value = null;
   try {
-    result.value = await mathService.calculateLCM(v1, v2);
+    result.value = await mathService.LCM(a, b);
   } catch (error) {
     console.error('Error calculating LCM:', error);
     // Handle error (e.g., show toast)

@@ -11,7 +11,7 @@
             </label>
             <input 
               type="number" 
-              v-model.number="value1" 
+              v-model="value1" 
               placeholder="Enter first number" 
               class="input input-bordered input-primary w-full" 
             />
@@ -25,7 +25,7 @@
             </label>
             <input 
               type="number" 
-              v-model.number="value2" 
+              v-model="value2" 
               placeholder="Enter second number" 
               class="input input-bordered input-secondary w-full" 
             />
@@ -60,18 +60,26 @@ defineProps<{
   label1: string;
   label2: string;
   loading?: boolean;
-  result?: number | null;
+  result?: string | null;
 }>();
 
 const emit = defineEmits<{
-  (e: 'calculate', v1: number, v2: number): void;
+  (e: 'calculate', v1: string, v2: string): void;
 }>();
 
-const value1 = ref<number | null>(null);
-const value2 = ref<number | null>(null);
+const value1 = ref<string | null>(null);
+const value2 = ref<string | null>(null);
 
 const isValidInput = computed(() => {
-  return value1.value !== null && value2.value !== null && !isNaN(value1.value) && !isNaN(value2.value);
+  
+  return (
+    value1.value !== null &&
+    value2.value !== null &&
+    value1.value !== '' &&
+    value2.value !== '' &&
+    !Number.isNaN(Number(value1.value)) &&
+    !Number.isNaN(Number(value2.value))
+  );
 });
 
 const onCalculate = () => {

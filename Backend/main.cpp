@@ -1,8 +1,12 @@
 #include <crow.h>
 #include "Api/MathUtilsRoutes.h"
+#include "CorsMiddleWare.h"
 
 int main() {
-    crow::SimpleApp app;
+
+    crow::App<CorsMiddleware> app;
+
+    app.loglevel(crow::LogLevel::Debug);
 
     MathUtilsRoutes mathUtilRoutes(app);
 
