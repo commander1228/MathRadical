@@ -1,9 +1,7 @@
 #include "MathUtils.h"
 #include <cmath>
-#include <algorithm>
 #include <iostream>
 #include <stdexcept>
-#include <numeric>
 
 long long MathUtils::GCD(long long a, long long b) {
     a = std::llabs(a);
