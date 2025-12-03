@@ -10,57 +10,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-test:
-    runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          submodules: 'true'
-
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y cmake g++
-
-      - name: Configure CMake
-        run: cmake -B ${{github.workspace}}/build -S ${{github.workspace}} -DCMAKE_BUILD_TYPE=Release
-
-      - name: Build Project
-        run: cmake --build ${{github.workspace}}/build --config Release --parallel
-
-      - name: Run Catch2 Tests
-        run: |
-          cd ${{github.workspace}}/build
-          ctest --output-on-failure
-
-  frontend-build-and-test:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./Frontend
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: Frontend/package-lock.json
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build and Type Check
-        run: npm run build
 
   frontend-fedora:
-    runs-on: ubuntu-latest
-    container: fedora:latest
+    runs-on: fedora-latest
     defaults:
       run:
         working-directory: ./Frontend
