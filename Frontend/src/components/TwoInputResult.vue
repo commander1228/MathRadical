@@ -1,18 +1,82 @@
 <template>
-<div class="flex min-h-screen items-center justify-center">
-<div class = "flex justify-center gap-4 items-center">
-<input type="text" placeholder="Value 1" class="input input-accent" />
-<h1>+</h1>
-<input type="text" placeholder="Value 2" class="input input-secondary" />
-<h1>=</h1>
-<input type="text" placeholder="Result" class="input input-primary" />
-</div>
-</div>
+  <div class="flex min-h-screen items-center justify-center bg-base-200 p-4">
+    <div class="card w-full max-w-lg bg-base-100 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title justify-center text-2xl mb-4">{{ title }}</h2>
+        
+        <div class="flex flex-col gap-4">
+          <div class="form-control w-full">
+            <label class="label">
+              <span class="label-text">{{ label1 }}</span>
+            </label>
+            <input 
+              type="number" 
+              v-model.number="value1" 
+              placeholder="Enter first number" 
+              class="input input-bordered input-primary w-full" 
+            />
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="form-control w-full">
+            <label class="label">
+              <span class="label-text">{{ label2 }}</span>
+            </label>
+            <input 
+              type="number" 
+              v-model.number="value2" 
+              placeholder="Enter second number" 
+              class="input input-bordered input-secondary w-full" 
+            />
+          </div>
+
+          <div class="card-actions justify-center mt-6">
+            <button 
+              class="btn btn-primary w-full" 
+              @click="onCalculate" 
+              :disabled="loading || !isValidInput"
+            >
+              <span v-if="loading" class="loading loading-spinner"></span>
+              Calculate
+            </button>
+          </div>
+
+          <div v-if="result !== null" class="alert alert-success mt-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <span>Result: <span class="font-bold text-lg">{{ result }}</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
+<script setup lang="ts">
+import { ref, computed } from 'vue';
 
+const props = defineProps<{
+  title: string;
+  label1: string;
+  label2: string;
+  loading?: boolean;
+  result?: number | null;
+}>();
 
-<script setup lang ="ts">
+const emit = defineEmits<{
+  (e: 'calculate', v1: number, v2: number): void;
+}>();
 
+const value1 = ref<number | null>(null);
+const value2 = ref<number | null>(null);
 
+const isValidInput = computed(() => {
+  return value1.value !== null && value2.value !== null && !isNaN(value1.value) && !isNaN(value2.value);
+});
+
+const onCalculate = () => {
+  if (isValidInput.value && value1.value !== null && value2.value !== null) {
+    emit('calculate', value1.value, value2.value);
+  }
+};
 </script>
