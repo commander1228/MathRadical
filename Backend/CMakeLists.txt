@@ -1,8 +1,6 @@
 set(CMAKE_POLICY_VERSION_MINIMUM 3.5)
 cmake_minimum_required(VERSION 3.20...3.30)
 
-
-
 project(MathRadical CXX)
 
 set(CMAKE_CXX_STANDARD 20)
@@ -24,8 +22,6 @@ CPMAddPackage(Catch2
 find_package(Protobuf REQUIRED)
 find_package(gRPC REQUIRED)
 
-
-
 # Core library
 set(CORE_SOURCES
         Math/MathUtils.cpp
@@ -35,72 +31,67 @@ set(CORE_SOURCES
 add_library(MathRadicalCore STATIC ${CORE_SOURCES})
 target_include_directories(MathRadicalCore PUBLIC ${CMAKE_SOURCE_DIR}/Math)
 
+# --- gRPC Code Generation Function ---
+function(generate_grpc_cpp PROTO_FILE OUTPUT_DIR)
+    # Ensure the output directory exists
+    file(MAKE_DIRECTORY ${OUTPUT_DIR})
 
-function(generate_grpc_cpp PROTO_FILE)
-    # Define paths for generated files
-    string(REPLACE ".proto" "" BASE_NAME ${PROTO_FILE})
+    # Base name of proto file
+    get_filename_component(BASE_NAME ${PROTO_FILE} NAME_WE)
 
-    set(PROTO_C "${CMAKE_CURRENT_BINARY_DIR}/${BASE_NAME}.pb.cc")
-    set(GRPC_C "${CMAKE_CURRENT_BINARY_DIR}/${BASE_NAME}.grpc.pb.cc")
+    # Generated file paths
+    set(PROTO_C "${OUTPUT_DIR}/${BASE_NAME}.pb.cc")
+    set(GRPC_C  "${OUTPUT_DIR}/${BASE_NAME}.grpc.pb.cc")
+    set(PROTO_H "${OUTPUT_DIR}/${BASE_NAME}.pb.h")
+    set(GRPC_H  "${OUTPUT_DIR}/${BASE_NAME}.grpc.pb.h")
 
-    # CRITICAL FIX: Get the absolute path to the gRPC plugin executable.
+    # gRPC plugin
     get_target_property(GRPC_PLUGIN_EXECUTABLE gRPC::grpc_cpp_plugin LOCATION)
-
     if(NOT GRPC_PLUGIN_EXECUTABLE)
         message(FATAL_ERROR "Could not find gRPC plugin executable. Please ensure vcpkg installed grpc[codegen].")
     endif()
 
-    # Generate ALL files (.pb.cc, .pb.h, .grpc.pb.cc, .grpc.pb.h) in ONE command.
+    # Generate protobuf and gRPC code
     execute_process(
             COMMAND ${Protobuf_PROTOC_EXECUTABLE}
             --proto_path ${CMAKE_CURRENT_SOURCE_DIR}
-            --cpp_out ${CMAKE_CURRENT_BINARY_DIR}  # Standard Protobuf files
-            --grpc_out ${CMAKE_CURRENT_BINARY_DIR} # gRPC Service files
-            --plugin=protoc-gen-grpc=${GRPC_PLUGIN_EXECUTABLE} # Use the absolute path!
-            ${PROTO_FILE}
+            --cpp_out ${OUTPUT_DIR}
+            --grpc_out ${OUTPUT_DIR}
+            --plugin=protoc-gen-grpc=${GRPC_PLUGIN_EXECUTABLE}
+            ${CMAKE_CURRENT_SOURCE_DIR}/${PROTO_FILE}  # absolute path
             RESULT_VARIABLE GENERATE_RESULT
     )
 
-    if (GENERATE_RESULT)
+    if(GENERATE_RESULT)
         message(FATAL_ERROR "gRPC code generation failed for ${PROTO_FILE}")
     endif()
 
-    # Define variables to hold the generated files for linking
-    set(GENERATED_PROTO_SOURCES
-            ${PROTO_C}
-            ${GRPC_C}
-            PARENT_SCOPE)
-
-    # Headers are auto-found by compiler path, but we keep the logic clean.
-    set(GENERATED_PROTO_HEADERS
-            "${CMAKE_CURRENT_BINARY_DIR}/${PROTO_FILE}.pb.h"
-            "${CMAKE_CURRENT_BINARY_DIR}/${PROTO_FILE}.grpc.pb.h"
-            PARENT_SCOPE)
+    # Return generated files
+    set(GENERATED_PROTO_SOURCES ${PROTO_C} ${GRPC_C} PARENT_SCOPE)
+    set(GENERATED_PROTO_HEADERS ${PROTO_H} ${GRPC_H} PARENT_SCOPE)
 endfunction()
 
-
 # --- gRPC Server Setup ---
-
-# Define the service contract file
+# Generate gRPC files into project root /generated_grpc
+set(GRPC_OUTPUT_DIR "${CMAKE_SOURCE_DIR}/generated_grpc")
+file(MAKE_DIRECTORY ${GRPC_OUTPUT_DIR})  # ensure folder exists
 set(SERVICE_PROTO "MathEngine.proto")
 
-# Find existing math implementation files and the new server file
-set(SERVER_SOURCES
-        MathEngineServer.cpp
-)
+# Find existing math implementation files and server file
+set(SERVER_SOURCES MathEngineServer.cpp)
 file(GLOB MATH_IMPL_SOURCES "Math/*.cpp")
 
-# Run the Protobuf/gRPC Code Generation
-generate_grpc_cpp(${SERVICE_PROTO})
+# Generate gRPC files
+generate_grpc_cpp(${SERVICE_PROTO} ${GRPC_OUTPUT_DIR})
 
-# Define the gRPC Server Executable
+# Define gRPC Server executable
 add_executable(MathEngineServer
         ${SERVER_SOURCES}
         ${MATH_IMPL_SOURCES}
         ${GENERATED_PROTO_SOURCES}
 )
 
-# Link Libraries for the gRPC Server
+# Link libraries
 target_link_libraries(MathEngineServer
         PRIVATE
         MathRadicalCore
@@ -108,16 +99,14 @@ target_link_libraries(MathEngineServer
         gRPC::gpr
 )
 
-# Set Include Directories
+# Include directories
 target_include_directories(MathEngineServer
         PUBLIC
-        ${CMAKE_SOURCE_DIR}/Math # Your core headers
-        ${CMAKE_CURRENT_BINARY_DIR} # To find generated headers (.pb.h, .grpc.pb.h)
+        ${CMAKE_SOURCE_DIR}/Math
+        ${GRPC_OUTPUT_DIR}  # headers are here
 )
 
 # --- Testing ---
-
-# Enable testing
 include(CTest)
 enable_testing()
 
