@@ -1,14 +1,15 @@
-FROM node:20-slim
-
+# Build stage
+FROM node:22-alpine as build-stage
 WORKDIR /app
-
-# Copy package files first for better caching
-COPY package.json package-lock.json ./
-
-# Install dependencies
+COPY package*.json ./
 RUN npm install
+COPY . .
+ARG VITE_API_URL
+ENV VITE_API_URL=$VITE_API_URL
+RUN npm run build
 
-# We don't copy the rest of the source here because we'll mount it
-# This ensures node_modules is populated in the container
-
-CMD ["npm", "run", "dev", "--", "--host"]
+# Production stage
+FROM nginx:stable-alpine as production-stage
+COPY --from=build-stage /app/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

@@ -20,7 +20,36 @@ CPMAddPackage(Catch2
 )
 
 find_package(Protobuf REQUIRED)
-find_package(gRPC REQUIRED)
+find_package(gRPC CONFIG)
+if (NOT gRPC_FOUND)
+    find_package(PkgConfig REQUIRED)
+    pkg_check_modules(GRPC REQUIRED grpc++ grpc)
+    pkg_check_modules(GPR REQUIRED gpr)
+    
+    if(NOT TARGET gRPC::grpc++)
+        add_library(gRPC::grpc++ INTERFACE IMPORTED)
+        target_link_libraries(gRPC::grpc++ INTERFACE ${GRPC_LIBRARIES})
+        target_include_directories(gRPC::grpc++ INTERFACE ${GRPC_INCLUDE_DIRS})
+        target_link_options(gRPC::grpc++ INTERFACE ${GRPC_LDFLAGS})
+    endif()
+
+    if(NOT TARGET gRPC::gpr)
+        add_library(gRPC::gpr INTERFACE IMPORTED)
+        target_link_libraries(gRPC::gpr INTERFACE ${GPR_LIBRARIES})
+        target_include_directories(gRPC::gpr INTERFACE ${GPR_INCLUDE_DIRS})
+        target_link_options(gRPC::gpr INTERFACE ${GPR_LDFLAGS})
+    endif()
+
+    find_program(GRPC_CPP_PLUGIN grpc_cpp_plugin)
+    if(NOT GRPC_CPP_PLUGIN)
+        message(FATAL_ERROR "grpc_cpp_plugin not found")
+    endif()
+
+    if(NOT TARGET gRPC::grpc_cpp_plugin)
+        add_executable(gRPC::grpc_cpp_plugin IMPORTED)
+        set_target_properties(gRPC::grpc_cpp_plugin PROPERTIES IMPORTED_LOCATION ${GRPC_CPP_PLUGIN})
+    endif()
+endif()
 
 # Core library
 set(CORE_SOURCES
@@ -97,6 +126,7 @@ target_link_libraries(MathEngineServer
         MathRadicalCore
         gRPC::grpc++
         gRPC::gpr
+        protobuf::libprotobuf
 )
 
 # Include directories

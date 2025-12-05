@@ -1,19 +1,28 @@
+version: '3.8'
+
 services:
   backend:
     build: ./Backend
-    volumes:
-      - ./Backend:/app
     ports:
-      - "18080:18080"
-    # Keep the container running if the app crashes or for debugging
-    restart: unless-stopped
+      - "50051:50051"
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  api:
+    build: ./API
+    ports:
+      - "5000:5000"
+    environment:
+      - MATH_ENGINE_SERVER=backend:50051
+    depends_on:
+      - backend
 
   frontend:
-    build: ./Frontend
-    volumes:
-      - ./Frontend:/app
-      - /app/node_modules
+    build:
+      context: ./Frontend
+      args:
+        VITE_API_URL: http://localhost:5000
     ports:
-      - "5173:5173"
-    environment:
-      - CHOKIDAR_USEPOLLING=true # Often needed for hot reload on Windows/Docker
+      - "8080:80"
+    depends_on:
+      - api
