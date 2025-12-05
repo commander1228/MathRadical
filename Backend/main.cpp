@@ -1,15 +1,9 @@
-#include <crow.h>
-#include "Api/MathUtilsRoutes.h"
-#include "CorsMiddleWare.h"
+#include <iostream>
 
 int main() {
 
-    crow::App<CorsMiddleware> app;
+    std::cout << "Its Mathing time"<<std::endl;
 
-    app.loglevel(crow::LogLevel::Debug);
-
-    MathUtilsRoutes mathUtilRoutes(app);
-
-    app.port(18080).multithreaded().run();
+    return 0;
 
 }
