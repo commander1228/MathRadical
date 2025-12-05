@@ -87,7 +87,6 @@ set(SERVICE_PROTO "MathEngine.proto")
 # Find existing math implementation files and the new server file
 set(SERVER_SOURCES
         MathEngineServer.cpp
-        main.cpp
 )
 file(GLOB MATH_IMPL_SOURCES "Math/*.cpp")
 
@@ -106,7 +105,6 @@ target_link_libraries(MathEngineServer
         PRIVATE
         MathRadicalCore
         gRPC::grpc++
-        protobuf
         gRPC::gpr
 )
 

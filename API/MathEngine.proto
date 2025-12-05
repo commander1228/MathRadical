@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package RadMath;
+
+
+service MathEngine {
+  rpc GreatestCommonDenominator (TwoWholeNumbers) returns (WholeNumberResultReply);
+
+  rpc LeastCommonMultiple (TwoWholeNumbers) returns (WholeNumberResultReply);
+}
+
+// --- Input Message Definitions ---
+
+message TwoWholeNumbers{
+  int64 number1 = 1;
+  int64 number2 = 2;
+}
+
+// --- Output Message Definitions ---
+
+message WholeNumberResultReply {
+  repeated int64 result_values = 1;
+  bool success = 2;
+  string error_message = 3;
+}

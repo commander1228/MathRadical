@@ -4,6 +4,7 @@
 // =============================================================================
 // FRACTION CLASS TESTS
 // =============================================================================
+using RadMath::Fraction;
 
 TEST_CASE("Fraction - Simplification and Normalization", "[Fraction][constructor]") {
     // Test 1: Basic Simplification (assuming it's implemented)
