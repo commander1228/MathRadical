@@ -1,34 +1,33 @@
 <template>
-  <div class="flex min-h-screen items-center justify-center bg-base-200 p-4">
     <div class="card w-full max-w-lg bg-base-100 shadow-xl">
       <div class="card-body">
         <h2 class="card-title justify-center text-2xl mb-4">{{ title }}</h2>
         
         <div class="flex flex-col gap-4">
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text">{{ label1 }}</span>
-            </label>
-            <input 
-              type="number" 
-              v-model="value1" 
-              placeholder="Enter first number" 
-              class="input input-bordered input-primary w-full" 
-            />
-          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="form-control w-full">
+              <label class="label">
+                <span class="label-text">{{ label1 }}</span>
+              </label>
+              <input 
+                type="number" 
+                v-model="value1" 
+                placeholder="Enter first number" 
+                class="input input-bordered input-primary w-full" 
+              />
+            </div>
 
-          <div class="divider"></div>
-
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text">{{ label2 }}</span>
-            </label>
-            <input 
-              type="number" 
-              v-model="value2" 
-              placeholder="Enter second number" 
-              class="input input-bordered input-secondary w-full" 
-            />
+            <div class="form-control w-full">
+              <label class="label">
+                <span class="label-text">{{ label2 }}</span>
+              </label>
+              <input 
+                type="number" 
+                v-model="value2" 
+                placeholder="Enter second number" 
+                class="input input-bordered input-secondary w-full" 
+              />
+            </div>
           </div>
 
           <div class="card-actions justify-center mt-6">
@@ -46,10 +45,15 @@
             <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             <span>Result: <span class="font-bold text-lg">{{ result }}</span></span>
           </div>
+
+          <div v-if="error" class="alert alert-error mt-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <span>{{ error }}</span>
+          </div>
         </div>
+
       </div>
     </div>
-  </div>
 </template>
 
 <script setup lang="ts">
@@ -61,6 +65,7 @@ defineProps<{
   label2: string;
   loading?: boolean;
   result?: string | null;
+  error?: string | null;
 }>();
 
 const emit = defineEmits<{

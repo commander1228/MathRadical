@@ -1,4 +1,0 @@
-flask
-flask-cors
-grpcio
-grpcio-tools

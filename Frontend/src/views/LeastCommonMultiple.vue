@@ -1,30 +1,59 @@
 <template>
-  <TwoInputResult 
-    title="Least Common Multiple"
-    label1="Number 1"
-    label2="Number 2"
-    :loading="loading"
-    :result="result"
-    @calculate="handleCalculate"
-  />
+  <div class="min-h-screen bg-base-200 p-4">
+    <div class="flex flex-col lg:flex-row gap-8 items-start justify-center max-w-6xl mx-auto">
+      
+      <!-- Left Side: Calculator -->
+      <TwoInputResult 
+        title="Least Common Multiple"
+        label1="Number 1"
+        label2="Number 2"
+        :loading="loading"
+        :result="result"
+        :error="error"
+        @calculate="handleCalculate"
+      />
+
+      <!-- Right Side: History -->
+      <HistoryList :history="filteredHistory" />
+      
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import TwoInputResult from '../components/TwoInputResult.vue';
+import HistoryList from '../components/HistoryList.vue';
 import mathService from '../api/mathService';
+import { useHistory } from '../composables/useHistory';
 
 const loading = ref(false);
 const result = ref<string | null>(null);
+const error = ref<string | null>(null);
+const { history, addToHistory } = useHistory();
+
+const filteredHistory = computed(() => {
+  return history.value.filter(item => item.operation === 'LCM');
+});
 
 const handleCalculate = async (a: string, b: string) => {
   loading.value = true;
   result.value = null;
+  error.value = null;
   try {
     result.value = await mathService.LCM(a, b);
-  } catch (error) {
-    console.error('Error calculating LCM:', error);
-    // Handle error (e.g., show toast)
+    if (result.value) {
+      addToHistory({
+        a,
+        b,
+        result: result.value,
+        operation: 'LCM'
+      });
+    }
+  } catch (err: any) {
+    console.error('Error calculating LCM:', err);
+    // Extract error message from axios response if available
+    error.value = err.response?.data?.error || 'An unexpected error occurred';
   } finally {
     loading.value = false;
   }

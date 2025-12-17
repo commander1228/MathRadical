@@ -2,7 +2,6 @@ syntax = "proto3";
 
 package RadMath;
 
-
 service MathEngine {
   rpc GreatestCommonDenominator (TwoWholeNumbers) returns (WholeNumberResultReply);
 
