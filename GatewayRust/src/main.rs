@@ -96,41 +96,18 @@ async fn get_lcm(
     Path((a, b)): Path<(i64, i64)>,
     State(mut client): State<MathEngineClient<Channel>>,
 ) -> impl IntoResponse {
-    // The C++ Server doesn't expose LCM, but it does expose GCD.
-    // We replicate the C++ MathUtils::LCM logic here: (a / gcd) * b
-    
     let request = tonic::Request::new(TwoWholeNumbers {
         number1: a,
         number2: b,
     });
 
-    match client.greatest_common_denominator(request).await {
+    match client.least_common_multiple(request).await {
         Ok(response) => {
             let inner = response.into_inner();
-            
-            if !inner.success || inner.result_values.is_empty() {
-                 return (StatusCode::INTERNAL_SERVER_ERROR, Json(json!({
-                    "success": false,
-                    "error": format!("Backend failed to calculate GCD: {}", inner.error_message)
-                })));
-            }
-
-            let gcd = inner.result_values[0];
-            
-            if gcd == 0 {
-                return (StatusCode::OK, Json(json!({
-                    "success": true,
-                    "result": 0,
-                    "all_results": vec![0]
-                })));
-            }
-
-            let result = (a / gcd) * b;
-
             (StatusCode::OK, Json(json!({
                 "success": inner.success,
-                "result": result,
-                "all_results": vec![result]
+                "result": inner.result_values.first(),
+                "all_results": inner.result_values
             })))
         }
         Err(status) => (StatusCode::INTERNAL_SERVER_ERROR, Json(json!({
