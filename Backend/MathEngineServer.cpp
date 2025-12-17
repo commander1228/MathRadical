@@ -46,6 +46,25 @@ public:
     return grpc::Status::OK;
   }
 
+  Status LeastCommonMultiple(ServerContext* context,
+        const TwoWholeNumbers* request,
+        WholeNumberResultReply* response
+    ) override {
+    RadMath::MathEngineValidator Validator;
+    long long num1 = request->number1();
+    long long num2 = request->number2();
+    std::vector<long long> numbers = {num1,num2};
+    Validator.ValidateNotAllZeros(numbers);
+    if (!Validator.wasValid()) {
+      Validator.printErrors();
+    }
+      int64_t result = RadMath::MathUtils::LCM(num1,num2,false);
+      response -> add_result_values(result);
+      response ->set_success(true);
+
+    return grpc::Status::OK;
+  }
+
 };
   // 2. Server Startup Boilerplate
   void RunServer() {

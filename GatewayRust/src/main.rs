@@ -11,10 +11,6 @@ use std::net::SocketAddr;
 use tower_http::cors::CorsLayer;
 
 pub mod rad_math {
-    // tonic/prost generates snake_case filenames for packages. 
-    // RadMath -> rad_math.rs or radmath.rs? 
-    // Based on previous error, RadMath.rs didn't exist.
-    // Let's try matching the module structure generated.
     tonic::include_proto!("rad_math"); 
 }
 
@@ -24,9 +20,8 @@ use tonic::transport::Channel;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    // 1. Configure Backend Connection
     let backend_url = env::var("MATH_ENGINE_SERVER").unwrap_or_else(|_| "http://[::1]:50051".to_string());
-    // Ensure URL has scheme
+    
     let backend_url = if !backend_url.starts_with("http") {
         format!("http://{}", backend_url)
     } else {
@@ -35,15 +30,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     println!("Connecting to backend at: {}", backend_url);
 
-    // 2. Initialize gRPC Client
-    // We try to connect lazily or eagerly. For resilience, we'll connect per request or hold a channel.
-    // Tonic channels are cheap to clone and thread-safe.
     let channel = Channel::from_shared(backend_url)?
         .connect_lazy();
     
     let client = MathEngineClient::new(channel);
 
-    // 3. Define Router
     let app = Router::new()
         .route("/health", get(health_check))
         .route("/gcd/:a/:b", get(get_gcd))
@@ -51,7 +42,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .layer(CorsLayer::permissive())
         .with_state(client);
 
-    // 4. Start Server
     let port = env::var("PORT").unwrap_or_else(|_| "5000".to_string());
     let addr: SocketAddr = format!("0.0.0.0:{}", port).parse()?;
     
